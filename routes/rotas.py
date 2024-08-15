@@ -1,8 +1,13 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, session, redirect, url_for
+from models.usuario import Usuario
 
-#é uma maneira de organizar e modularizar o código no Flask. Ele permite agrupar as rotas, tornando o código mais fácil de manter.
-home_bp = Blueprint('home', __name__)
+rotas_bp = Blueprint('rotas', __name__)
 
-@home_bp.route('/')
-def home():
-    return render_template('index.html')
+@rotas_bp.route('/welcome')
+def welcome():
+    user_id = session.get('user_id')
+    if user_id:
+        user = Usuario.query.get(user_id)
+        return render_template('welcome.html', user=user)
+    return redirect(url_for('auth.login'))
+
