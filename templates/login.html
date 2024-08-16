@@ -1,26 +1,431 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"><head>
+    <meta http-equiv="origin-trial" content="A/kargTFyk8MR5ueravczef/wIlTkbVk1qXQesp39nV+xNECPdLBVeYffxrM8TmZT6RArWGQVCJ0LRivD7glcAUAAACQeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZS5jb206NDQzIiwiZmVhdHVyZSI6IkRpc2FibGVUaGlyZFBhcnR5U3RvcmFnZVBhcnRpdGlvbmluZzIiLCJleHBpcnkiOjE3NDIzNDIzOTksImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://ged.docxpress.com.br/Login/Assets/login.css">
+    <link rel="icon" href="https://www.unifeso.edu.br/images/favicon.png">
+    <title>Doc.Xpress</title>
+    <style>
+        .grecaptcha-badge {
+            visibility: hidden;
+        }
+    </style>
+    
+    <script type="text/javascript" async="" charset="utf-8" 
+    src="https://www.gstatic.com/recaptcha/releases/hfUfsXWZFeg83qqxrK27GB8P/recaptcha__pt_br.js" 
+    crossorigin="anonymous" integrity="sha384-nWbc4uEImIfEMNk1C6/Zp73d6qjwnQSEJeNJhTGOYt0NoRWul7yWr2GGT7nTJ7sv"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LdaYbAZAAAAAHHsOG2SnjjuDusJnAr8SUH4mCwg"></script>
 </head>
+
 <body>
-    <h2>Login</h2>
-    <form method="POST" action="/welcome">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
+    
+    <div class="d-flex flex-row">
+        
+        <div id="banner" class="gradient vh-100" style="animation-name: widthReverseAnimation; animation-duration: 0.8s; 
+            background: linear-gradient(90deg, #4ab9ac 0%, #127E71 100%);"> </div>
+        <main class="container d-flex flex-column vh-100 justify-content-center align-items-center">
+            <div id="loginContainer" class="d-flex flex-column bg-light rounded-4 shadow" style="max-width: 27.375rem; animation-name: divLoginAnimation; animation-duration: 0.6s;">
+                <button type="button" id="btnVoltar" class="btn border align-self-start position-absolute" style="border-start-start-radius: 1rem;" title="Voltar" onclick="OnPreviousStep()">
+                    <a class="d-flex justify-content-center icon-link icon-link-hover p-2 text-dark" style="text-decoration: none;">
+                        <i class="bi bi-arrow-left d-block h-100"></i>
+                    </a>
+                </button>
+                <div class="m-5 gap-4">
+                    <img src="https://www.unifeso.edu.br/images/logo/UNIFESO.png" alt="Logo Unifeso" class="img-fluid">
+                    <form method="post" action="./Default.aspx?ReturnUrl=%2fApp%2fDX%2f" id="formLogin" class="d-flex fle flex-column gap-2" style="animation-name: opacityAnimation; animation-duration: 0.8s;">
+                        <div class="aspNetHidden">
+                        <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="lUea3gjOuoaQlr8+hpKxp2YSe7DvyZiJGHl2TPsipJHUCAAmvB9eOvJ9je3TXHlzG12ZlXH1p65uWCnBLf98IN0d4/pEXR6ThWAE9HeppFv/9734w+ssQHpQ104crjzOmTR3U8SpQL12IFDkSSUnNMbkOiQ=">
+                        </div>
 
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" required><br>
+                        <div class="aspNetHidden">
 
-        <button type="submit">Entrar</button>
-    </form>
+                            <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="25748CED">
+                            <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="5BYgDJjd/+svY1x1sHEkLa4PIBg2LNT6ytB6kBV5yKr5a97cdkg+9i6Vk8XJg8l1B2cNauQ/Zv7Tl6ZJMoLzqdLDannJQnvsp28Lb7uV+/AziIXjB6EuxgtjNJG5L35Zu0j7wTQxnexFD+KAjNPOCakRSZE=">
+                        </div>
+                        <input type="hidden" name="HidToken" id="HidToken" value="03AFcWeA6Rkj9CwgHS1P7IzYyz8OYAS6xNwTb2pJ1czFia0ewDqYpXYczv1iUcExu7W6u1Ifkl3WzKORzLMf2A7ASac4-N5-djyPQiplJdDknLigYaU52gIvO6U1brgXXCxuA6tiyGaTuim-imEZnuxcZmVKNfqS52-wn4JqcsrdZN1qYfNwEfvthmEVNz2ot_9b5S4qOlaQZFSxpI-J7XAbCoaDx9cNZfx4aJuUGuNJl9tGo8f_0K-Tw-k6qTefLOu26NJcyetYKQWJzRzoe5RUrtcyw8_18kQeNTE9hFTnddpgOVnwp6Q2_misfy06oNFMKdEtX2342SYiosJFSMQZGKawm1u31i_rM9XDS5NtBSnr-pbqOlUMpXOy64-xjSCaPCF1DaFsv7OiORBzAHawi3CARWhr3cdjjlwK53e685HaefoKDvhRfTxkhChGYov7UbLUtN6Vtzp0yqf9YEkntM0gbmjEWeX-cbpF2au0M9yR9xnaeRj1IiCOx0oGUpZfqZRwV8lXlXClkYonVVgumsN_lLSoy2s8UYBLSwW12vREul0oXcq6QS7dMqooD7dpPP0JnIbayU7FQYQvCUcGQ4XySZuR0Sg8dFCuKbp55L2lPWZdXqsiguxNbmaMkbU_8w29x1hy6Oz9PF5YM9nX640uCHBDSNXP5MHVxbXI-GRrgfoU67jTOFM1NoOiq8CP_xw6m9K61K-Re_tGAuN9LGu4xbfxRJS1Y42m27Tk_cKJ8Zdkd7D60f-rGOJTlT0F_NnW65QkPulflf8sttMfP64J-W09NbXC-xcHInqyt5jmW5yAfZ5kcOJEVfdtlmbl_M02WVdW6dZ9DpntTPhSR2ZIbL8wj63Q">
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text" id="addon-wrapping-mail"><i class="bi bi-envelope"></i></span>
+                            <input id="TbUserName" type="email" class="form-control rounded-end focus-ring focus-ring-secondary" placeholder="Email" aria-label="Username" aria-describedby="addon-wrapping-mail" readonly="">
+                            <div id="emailInputErrorContainer" class="invalid-tooltip">Informe um email válido!</div>
+                        </div>
 
-    <p>Não tem uma conta? <a href="/register">Cadastre-se aqui</a></p>
+                        <button class="btn btn-dark mt-2 p-0 d-none" type="button" title="Próxima etapa" id="btnProximaEtapa" onclick="ValidateEmail()">
+                            <a class="d-flex justify-content-center icon-link icon-link-hover text-light p-2" style="text-decoration: none;">Avançar
+                            <i class="bi bi-arrow-right d-block h-100"></i>
+                            </a>
+                        </button>
+                        <div id="secondStepContainer" class="d-flex flex-column gap-2">
+                            <div id="InputGroupPassword" class="input-group flex-nowrap">
+                                <span class="input-group-text" id="addon-wrapping-password"><i class="bi bi-key"></i></span>
+                                <input id="TbPassword" type="password" class="form-control focus-ring focus-ring-secondary is-invalid" placeholder="Senha" aria-label="Username" aria-describedby="addon-wrapping-password">
+                                <button class="btn btn-dark rounded-end" type="button" title="Visualizar senha" id="btnViewPassword" onclick="onViewPassword()"><i id="viewPasswordIcon" class="bi bi-eye-slash"></i></button>
+                                <div class="invalid-tooltip">
+                                    Informe uma senha válida
+                                </div>
+                            </div>
 
-    {% if error %}
-    <p style="color:red;">{{ error }}</p>
-    {% endif %}
-</body>
-</html>
+                            <div class="collapse" id="collapseExample" style="display: none;">
+                                <div class="d-flex flex-row text-danger text-wrap text-center">
+                                    <i class="bi bi-exclamation-circle-fill me-2"></i>
+                                    <p id="erroField" class="m-0"></p>
+                                </div>
+                            </div>
+                            <button id="btnLogin" type="button" class="btn btn-dark mt-2 p-0" onclick="sendLoginForm()">
+                                <span id="loadingSpinner" class="spinner-border spinner-border-sm m-2 d-none" aria-hidden="true"></span>
+                                <a id="btnLoginText" class="d-flex justify-content-center icon-link icon-link-hover text-light p-2" style="text-decoration: none;">Login
+                                <i class="bi bi-arrow-right d-block h-100"></i>
+                                </a>
+                            </button>
+                            <button id="btnForgotPassword" type="button" title="Esqueci a senha" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn align-self-center text-secondary p-0 mt-2" style="text-decoration: underline;">Esqueci a senha</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <footer class="d-flex flex-row fw-bold position-absolute bottom-0 end-0 p-2 text-light ">
+        <a class="mb-0 text-light align-center" href="http://https://www.unifeso.edu.br/" target="_blank">
+            <i class="bi bi-c-circle me-1"></i>
+            Unifeso
+        </a>
+        <p id="buildAndDateInfo" class="mb-0 ms-1">| 2024</p>
+    </footer>
+
+    
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p id="modalText" class="m-0">Confirma a redefinição de senha? Se sim, o usuário estará bloqueado até que a redefinição seja concluída.</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnResetPasswordDoNo" type="button" class="btn btn-danger" data-bs-dismiss="modal">Não</button>
+                    <button id="btnResetPasswordDoYes" type="button" class="btn btn-success" onclick="resetPasswordDoYes()">Sim</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="modalMSAL" class="modal"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+
+$(document).ready(function () {
+    getBuildInfo();
+});
+
+function getBuildInfo() {
+    var field = document.getElementById('buildAndDateInfo');
+    $.ajax({
+        type: "POST",
+        url: "Default.aspx/getBuildInfo",
+        contentType: "application/json; charset=utf-8",
+        async: false,
+    })
+        .done(function (data) {
+            field.innerHTML = data.d;
+        })
+        .fail(function (error) {
+            console.error('Erro to retrieve build info: ' + error.responseJSON.Message);
+        });
+}
+
+function getCaptcha(captchaTokenInput) {
+    if (!captchaTokenInput.value) {
+        var reCaptchaKeyClient = '6LdaYbAZAAAAAHHsOG2SnjjuDusJnAr8SUH4mCwg';
+        grecaptcha.execute(reCaptchaKeyClient, { action: 'login' }).then(function (token) {
+            document.getElementById('HidToken').value = token;
+        });
+    }
+}
+
+function ValidateEmail() {
+    var captchaTokenInput = document.getElementById("HidToken");
+    getCaptcha(captchaTokenInput);
+
+    var emailInput = document.getElementById("TbUserName");
+
+    $.ajax({
+        type: "POST",
+        url: "Default.aspx/verifyEmail",
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        data: JSON.stringify({
+            TbUserName: emailInput.value,
+            CaptchaToken: captchaTokenInput.value,
+        }),
+    })
+        .done(function (data) {
+            userIsSSO(emailInput);
+        })
+        .fail(function (error) {
+            var errorContainer = document.getElementById("emailInputErrorContainer");
+            errorContainer.innerHTML = error.responseJSON.Message;
+            emailInput.classList.add("is-invalid");
+            return false;
+        });
+}
+//SSO
+function userIsSSO(emailInput) {
+    $.ajax({
+        type: "POST",
+        url: "Default.aspx/userIsSSO",
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        data: JSON.stringify({
+            TbUserName: emailInput.value,
+        }),
+    })
+        .done(function (data) {
+            var isSSO = data.d;
+            emailInput.classList.remove("is-invalid");
+
+            if (isSSO) {
+                showSSOWindow();
+            } else {
+                onNextStep();
+            }
+        })
+        .fail(function (error) {
+            emailInput.classList.remove("is-invalid");
+            onNextStep();
+        });
+}
+
+function showSSOWindow() {
+    var redirectURI = "";
+    if (window.location.origin.includes("intranet") || window.location.origin.includes("h.debarry")) {
+        redirectURI = window.location.origin + "/docxpress.ged/App/Dx/Documento/Pesquisar/"
+    }
+    else {
+        redirectURI = window.location.origin + "/App/Dx/Documento/Pesquisar/"
+    }
+
+    const msalConfig = {
+        auth: {
+            clientId: "9c689188-8d38-4195-bf7d-e2a8569fb284",
+            redirectUri: redirectURI, //defaults to application start page
+        },
+        cache: {
+            cacheLocation: "sessionStorage", // This configures where your cache will be stored
+            storeAuthStateInCookie: false, // Set this to "true" if you are having issues on IE11 or Edge
+        },
+    };
+    const myMSALObj = new msal.PublicClientApplication(msalConfig);
+    const loginRequest = {
+        origin: null,
+        scopes: ["openid", "profile"],
+        prompt: "select_account",
+    };
+    const modal = (document.getElementById("modalMSAL").style.display = "block");
+
+    myMSALObj
+        .loginPopup(loginRequest)
+        .then((loginResponse) => sendSSOLoginData(loginResponse, redirectURI))
+        .catch((e) => console.error("ERRO login SSO: " + e))
+        .finally(
+            () => (document.getElementById("modalMSAL").style.display = "none")
+        );
+}
+
+function sendSSOLoginData(loginResponse, redirectURI) {
+    var username = loginResponse.account.username;
+    var captchaTokenInput = document.getElementById("HidToken");
+
+    $.ajax({
+        type: "POST",
+        url: "Default.aspx/doSSOLogin",
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        data: JSON.stringify({
+            TbUserName: username,
+            CaptchaToken: captchaTokenInput.value,
+        }),
+    })
+        .done(function (data) {
+            window.location.href = redirectURI;
+        })
+        .fail(function (error) {
+            var errorContainer = document.getElementById("emailInputErrorContainer");
+            errorContainer.innerHTML = error.responseJSON.Message;
+            document.getElementById("TbUserName").classList.add("is-invalid");
+        });
+}
+
+function getMsalPopups() {
+    // internal msal api: this may change in a future release
+    if (!window.openedWindows) {
+        window.openedWindows = [];
+    }
+
+    return window.openedWindows;
+}
+
+window.onclick = function (event) {
+    const popUps = getMsalPopups();
+    if (event.target == document.getElementById("modalMSAL") && popUps) {
+        popUps.forEach((element) => {
+            element.focus();
+        });
+    }
+};
+
+function onNextStep() {
+    document.getElementById("loginContainer").style.animationName =
+        "divLoginAnimation";
+    document.getElementById("loginContainer").style.animationDuration = "0.6s";
+
+    document.getElementById("TbUserName").readOnly = true;
+    document.getElementById("formLogin").style.animationName = "opacityAnimation";
+    document.getElementById("formLogin").style.animationDuration = "0.8s";
+
+    document.getElementById("btnProximaEtapa").classList.add("d-none");
+    document.getElementById("secondStepContainer").classList.remove("d-none");
+    document.getElementById("btnVoltar").classList.remove("d-none");
+
+    document.getElementById("banner").classList.remove("w-100");
+    document.getElementById("banner").style.animationName =
+        "widthReverseAnimation";
+    document.getElementById("banner").style.animationDuration = "0.8s";
+}
+
+function OnPreviousStep() {
+    document.getElementById('HidToken').value = "";
+    hideErrorContainer();
+    document.getElementById("loginContainer").style.animationName =
+        "divLoginReverseAnimation";
+    document.getElementById("loginContainer").style.animationDuration = "0.6s";
+
+    document.getElementById("TbUserName").readOnly = false;
+    document.getElementById("formLogin").style.animationName = "opacityReverseAnimation";
+    document.getElementById("formLogin").style.animationDuration = "0.8s";
+
+    document.getElementById("btnProximaEtapa").classList.remove("d-none");
+    document.getElementById("secondStepContainer").classList.add("d-none");
+    document.getElementById("btnVoltar").classList.add("d-none");
+
+    document.getElementById("banner").style.animationName =
+        "widthAnimation";
+    document.getElementById("banner").style.animationDuration = "0.8s";
+
+    setTimeout(function () {
+        document.getElementById("banner").classList.add("w-100");
+    }, 750);
+}
+
+function onViewPassword() {
+    var canSeePassword =
+        document.getElementById("TbPassword").type === "text" ? true : false;
+    if (canSeePassword) {
+        document.getElementById("TbPassword").type = "password";
+        document
+            .getElementById("viewPasswordIcon")
+            .classList.replace("bi-eye", "bi-eye-slash");
+    } else {
+        document.getElementById("TbPassword").type = "text";
+        document
+            .getElementById("viewPasswordIcon")
+            .classList.replace("bi-eye-slash", "bi-eye");
+    }
+}
+
+function sendLoginForm() {
+    var emailInput = document.getElementById("TbUserName");
+    var passwordInput = document.getElementById("TbPassword");
+    var captchaTokenInput = document.getElementById("HidToken");
+    toggleLoginButton(true);
+    $.ajax({
+        type: "POST",
+        url: "Default.aspx/doLogin",
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        data: JSON.stringify({
+            TbUserName: emailInput.value,
+            TbPassword: passwordInput.value,
+            CaptchaToken: captchaTokenInput.value,
+        }),
+    })
+        .done(function (data) {
+            var redirectURI = "";
+            if (window.location.origin.includes("intranet") || window.location.origin.includes("h.debarry")) {
+                redirectURI = window.location.origin + "/docxpress.ged/App/Dx/Documento/Pesquisar/"
+            }
+            else {
+                redirectURI = window.location.origin + "/App/Dx/Documento/Pesquisar/"
+            }
+
+            window.location.assign(redirectURI);
+        })
+        .fail(function (error) {
+            if (error.responseJSON.Message === "Informe uma senha vÃ¡lida!") {
+                passwordInput.classList.add("is-invalid");
+                $(".collapse").hide();
+            } else {
+                passwordInput.classList.remove("is-invalid");
+                showErrorContainer(error.responseJSON.Message);
+            }
+            toggleLoginButton(false);
+        });
+}
+
+function toggleLoginButton(disableButton) {
+    document.getElementById('btnLogin').disable = disableButton;
+    if (disableButton) {
+        document.getElementById('btnLoginText').classList.add('d-none');
+        document.getElementById('loadingSpinner').classList.remove('d-none');
+    }
+    else {
+        document.getElementById('btnLoginText').classList.remove('d-none');
+        document.getElementById('loadingSpinner').classList.add('d-none');
+    }
+}
+
+function resetPasswordDoYes() {
+    var emailInput = document.getElementById("TbUserName");
+    var passwordInput = document.getElementById("TbPassword");
+    var captchaTokenInput = document.getElementById("HidToken");
+
+    $.ajax({
+        type: "POST",
+        url: "Default.aspx/RedefinirSenha",
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        data: JSON.stringify({
+            TbUserName: emailInput.value,
+            CaptchaToken: captchaTokenInput.value,
+        }),
+    })
+        .done(function (data) {
+            document.getElementById("btnResetPasswordDoYes").classList.add("d-none");
+            document.getElementById("btnResetPasswordDoNo").innerHTML = "Fechar";
+            document
+                .getElementById("btnResetPasswordDoNo")
+                .setAttribute("onClick", "location.reload()");
+            document.getElementById("modalText").innerHTML = data.d;
+        })
+        .fail(function (error) {
+            passwordInput.classList.remove("is-invalid");
+            showErrorContainer(error.responseJSON.Message);
+        });
+}
+
+function showErrorContainer(message) {
+    $(".collapse").show();
+    document.getElementById("erroField").innerHTML = message;
+}
+
+function hideErrorContainer() {
+    $(".collapse").hide();
+    document.getElementById("erroField").innerHTML = "";
+}
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://alcdn.msauth.net/browser/2.35.0/js/msal-browser.min.js"></script>
+
+<div><div class="grecaptcha-badge" data-style="bottomright" style="width: 256px; height: 60px; display: block; transition: right 0.3s; position: fixed; bottom: 14px; right: -186px; box-shadow: gray 0px 0px 5px; border-radius: 2px; overflow: hidden;"><div class="grecaptcha-logo"><iframe title="reCAPTCHA" width="256" height="60" role="presentation" name="a-7t3begk69tpk" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6LdaYbAZAAAAAHHsOG2SnjjuDusJnAr8SUH4mCwg&amp;co=aHR0cHM6Ly9nZWQuZG9jeHByZXNzLmNvbS5icjo0NDM.&amp;hl=pt-BR&amp;v=hfUfsXWZFeg83qqxrK27GB8P&amp;size=invisible&amp;cb=8uld7q4h4ue2"></iframe></div><div class="grecaptcha-error"></div><textarea id="g-recaptcha-response-100000" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div><iframe style="display: none;"></iframe></div></body></html>
